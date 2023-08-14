@@ -37,12 +37,12 @@ You can implement this without using floating-point HW or libraries — convert 
 
 
 Here’s 6 ways to check that a float is a whole integer:
-   ceilf(f) == f
-   floorf(f) == f
-   rint(f) == f
-   intnearby(f) == f
-   cast to int and back to float and see the same value (the compiler uses floating-point HW to implement this)
-   my method of checking significand bits used relative to the exponent
+   - ceilf(f) == f
+   - floorf(f) == f
+   - rint(f) == f
+   - intnearby(f) == f
+   - cast to int and back to float and see the same value (the compiler uses floating-point HW to implement this)
+   - my method of checking significand bits used relative to the exponent
 
 Note that probably the same floating-point HW and SW underlies all the languages on a given platform. You get the same implementation working in C, Rust, Swift, Java, Python...
 
