@@ -2,6 +2,7 @@
 
 This is about testing floating point numbers to see if they are whole integers and can be converted to an int32_t without loss.
 It is part of the dCBOR standards discussion.
+https://datatracker.ietf.org/doc/draft-mcnally-deterministic-cbor/
 
 TLDR: I’ve come to understand that all whole integers are precisely represented in IEEE 754. No rounding is needed to convert to CBOR type 0/1.
 
