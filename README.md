@@ -13,6 +13,7 @@ Details:
 I knew that you couldn't represent some numbers like 0.10 exactly as a float, only something like 0.10000000149. I didn’t know whether all whole integers could be represented exactly. If they couldn’t be represented exactly, rounding would be required and that might not be done exactly the same everywhere. Numeric reduction would be not exactly the same everywhere.
 
 Then I read about bugs in Intel chips that manifest in ceilf(), a candidate function for the whole integer check.
+https://randomascii.wordpress.com/2014/01/27/theres-only-four-billion-floatsso-test-them-all/
 
 I had to look deeper for the confidence that the CPU float instructions would give *exactly* the same result on hundreds of CPUs from Intel, Atmel, Apple, Infineon…
 
@@ -30,6 +31,7 @@ Or 9:
 - 1 1/8 multiplied by 8 is 9
 
 This is a nice explanation of the float format.
+https://softwareengineering.stackexchange.com/questions/215065/can-anyone-explain-representation-of-float-in-memory
 
 You can implement this without using floating-point HW or libraries — convert the float bits to a uint32_t and do some shifts, masks and a little loop.
 
@@ -53,6 +55,7 @@ Ceilf() and floor() compile down to one inline instruction on Intel and are prob
 The cast method only works for floats less that UINT32_MAX. This is OK for CBOR numeric reduction, but it is not a universal solution like all the others.
 
 Additionally, here’s a good articple on determinism in floating-point.
+https://randomascii.wordpress.com/2013/07/16/floating-point-determinism/
 
 LL
 
