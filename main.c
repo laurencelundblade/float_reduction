@@ -121,8 +121,6 @@ bool check_bits(float f)
 }
 
 
-void print3(void);
-
 
 int main(int argc, const char * argv[])
 {
