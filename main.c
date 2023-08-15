@@ -14,10 +14,10 @@
 
 
 /*
- * Convenient functions to avoid type punning, compiler warnings and
- * such. The optimizer reduces them to a simple assignment.  This is a
- * crusty corner of C.
-*/
+ * Copy float bits to/from a uint32_t without numeric conversion.
+ * These avoid type punning, compiler warnings and such. The optimizer
+ * reduces them to a simple assignment.  This is a crusty corner of C.
+ */
 static uint32_t copy_float_to_uint(float f)
 {
     uint32_t u32;
@@ -55,7 +55,9 @@ static float copy_uint_to_float(uint32_t u32)
 
 
 
-/* The following functions all return true of float f is a whole integer */
+/* The following functions all do the same thing in different ways. They
+ * return true if float is a whole integer.
+ */
 
 bool check_ceil(float f)
 {
@@ -95,9 +97,9 @@ bool check_bits(float f)
     const uint32_t significand  = f_bits & SINGLE_SIGNIFICAND_MASK;
 
 
-    /* Count down from 23 the number of bits that are not zero in the
-     * significand. This counts from the least significant bit until a
-     * non-zero bit is found.
+    /* Count down from 23 to the number of bits that are not zero in
+     * the significand. This counts from the least significant bit
+     * until a non-zero bit is found.
      */
     for(nz_bits = SINGLE_NUM_SIGNIFICAND_BITS; nz_bits > 0; nz_bits--) {
         mask = (0x01 << SINGLE_NUM_SIGNIFICAND_BITS) >> nz_bits;
@@ -106,9 +108,10 @@ bool check_bits(float f)
         }
     }
 
-    /* The exponent effectively shifts the bits in the significand to the
-     * left. If there are fewer bits set in the significand than are shifted,
-     * it is a whole integer. */
+    /* The exponent effectively shifts the bits in the significand to
+     * the left. If there are fewer bits set in the significand than
+     * are shifted, it is a whole integer.
+     */
     // https://softwareengineering.stackexchange.com/questions/215065/can-anyone-explain-representation-of-float-in-memory
     if(nz_bits <= unbiased_exp) {
         return true;
@@ -118,6 +121,7 @@ bool check_bits(float f)
 }
 
 
+void print3(void);
 
 
 int main(int argc, const char * argv[])
@@ -126,8 +130,8 @@ int main(int argc, const char * argv[])
     bool b_is_whole_int;
     uint32_t n;
 
-    /* Loops over all possible single-precision floats by looping
-     * over all uint32_t bit patterns and copying them into a float
+    /* Loops over all possible single-precision floats by looping over
+     * all uint32_t bit patterns and copying them into a float
      * variable.
      */
     for(n = 0; n < UINT32_MAX; n+=1) {
@@ -146,8 +150,8 @@ int main(int argc, const char * argv[])
             printf("check_floor failed %f\n", f);
         }
         if(f > -(float)UINT32_MAX && f < (float)UINT32_MAX) {
-            /* The cast method only works on the range of values
-             * that can fit into a uint32_t. */
+            /* The cast method only works on the range of values that
+             * can fit into a uint32_t. */
             if(b_is_whole_int != check_cast(f)) {
                 printf("check_cast failed %f\n", f);
             }
